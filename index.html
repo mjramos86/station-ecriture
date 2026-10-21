@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="fr" data-theme="nuit">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Station d’écriture</title>
+  <meta name="description" content="Un atelier d’écriture dans le navigateur : roman, scénario, théâtre et dialogues interactifs, avec minuteur de concentration, musique et ambiances.">
+  <meta name="theme-color" content="#1b1c33">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E✒️%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/page.css">
+  <link rel="stylesheet" href="css/graph.css">
+  <link rel="stylesheet" href="css/widgets.css">
+</head>
+<body>
+  <div id="bg" aria-hidden="true"></div>
+
+  <!-- ============================== accueil -->
+  <main id="home" hidden></main>
+
+  <!-- ============================== espace de travail -->
+  <div id="work" hidden>
+    <header class="topbar">
+      <button class="ico" id="btn-home" title="Mes projets" aria-label="Retour aux projets">⌂</button>
+      <button class="ico" id="btn-nav" title="Plan (Ctrl+\)" aria-label="Afficher ou masquer le plan">☰</button>
+      <div class="crumbs">
+        <span id="proj-title" title="Double-clic pour renommer"></span>
+        <span class="crumb-sep">›</span>
+        <span id="doc-title"></span>
+        <span id="mode-badge" class="chip tiny"></span>
+      </div>
+      <span class="spacer"></span>
+      <button class="btn sm search-btn" id="btn-palette" title="Aller à… (Ctrl+K)"><span>🔎</span><span class="lbl">Aller à…</span><kbd>Ctrl K</kbd></button>
+      <button class="ico" id="btn-export" title="Exporter (Ctrl+Maj+E)" aria-label="Exporter">⇩</button>
+      <button class="ico" id="btn-zen" title="Mode zen (Ctrl+Maj+F)" aria-label="Mode zen">🧘</button>
+      <button class="ico" id="btn-widgets" title="Widgets (Ctrl+.)" aria-label="Afficher ou masquer les widgets">🍅</button>
+      <button class="ico" id="btn-settings" title="Préférences" aria-label="Préférences">⚙</button>
+      <button class="ico" id="btn-help" title="Raccourcis et aide (F1)" aria-label="Aide">?</button>
+      <button class="ico" id="btn-more" title="Toutes les actions" aria-label="Toutes les actions">⋯</button>
+    </header>
+
+    <div class="layout">
+      <aside id="nav" class="panel" aria-label="Navigation"></aside>
+      <section id="center">
+        <div id="ed-area" hidden>
+          <div id="toolbar" class="toolbar" role="toolbar" aria-label="Mise en forme"></div>
+          <div id="find" class="find" hidden></div>
+          <div id="ed-wrap">
+            <div id="page" class="page">
+              <div id="ed" contenteditable="true" spellcheck="true" aria-label="Texte du document" aria-multiline="true" role="textbox"></div>
+            </div>
+          </div>
+        </div>
+        <div id="graph-area" class="graph" hidden></div>
+        <div id="cork-area" class="cork" hidden></div>
+        <div id="empty-area" class="empty" hidden>
+          <p>Aucun document ouvert.</p>
+          <button class="btn primary" id="empty-new">＋ Nouveau document</button>
+        </div>
+      </section>
+      <aside id="widgets" class="panel" aria-label="Widgets"></aside>
+    </div>
+
+    <footer id="statusbar" class="statusbar">
+      <span id="save-state" class="ok">✓ Enregistré</span>
+      <span id="st-el"></span>
+      <span id="st-words"></span>
+      <span id="st-est"></span>
+      <span class="spacer"></span>
+      <span id="music-slot"></span>
+      <span id="st-total"></span>
+      <span id="st-today" title="Mots écrits aujourd’hui / objectif quotidien"></span>
+    </footer>
+    <div id="scrim"></div>
+    <button id="zen-exit" class="btn sm" title="Quitter le mode zen (Échap)">✕ Zen</button>
+  </div>
+
+  <script src="js/util.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/strings.js"></script>
+  <script src="js/modes.js"></script>
+  <script src="js/projects.js"></script>
+  <script src="js/fountain.js"></script>
+  <script src="js/editor.js"></script>
+  <script src="js/graph.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/find.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/music.js"></script>
+  <script src="js/widgets.js"></script>
+  <script src="js/exporter.js"></script>
+  <script src="js/palette.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

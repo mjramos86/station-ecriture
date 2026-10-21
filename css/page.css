@@ -1,0 +1,106 @@
+/* Barre d'outils et page d'écriture, avec les formats propres à chaque mode */
+
+/* ================================================================ barre d'outils */
+.toolbar { display: flex; align-items: center; gap: 4px; padding: 6px 10px; flex-wrap: wrap; flex: none !important; background: var(--panel); border-bottom: 1px solid var(--glass-border); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+#ed-area { display: flex; flex-direction: column; position: relative; }
+.tb-group { display: flex; align-items: center; gap: 1px; }
+.tb-sep { width: 1px; height: 22px; background: var(--glass-border); margin: 0 4px; }
+.tb { min-width: 30px; height: 30px; padding: 0 6px; border: 0; border-radius: 8px; background: none; color: var(--text); font-size: 14px; display: inline-grid; place-items: center; position: relative; }
+.tb:hover { background: var(--hover); }
+.tb.on { background: rgba(var(--accent-rgb), .22); color: var(--accent); }
+.tb b, .tb i, .tb u, .tb s { font-family: var(--serif); font-size: 15px; }
+.tb sup, .tb sub { font-size: 9px; }
+.tb.color { cursor: pointer; }
+.tb.color input { position: absolute; inset: auto 3px 2px 3px; width: auto; height: 4px; border: 0; border-radius: 2px; opacity: .9; padding: 0; }
+.tb-a { font-family: var(--serif); font-weight: 600; margin-top: -4px; }
+.tb-select { height: 30px; border-radius: 8px; border: 1px solid var(--glass-border); background: var(--field); padding: 0 6px; font-size: 12.5px; max-width: 200px; }
+.tb-select.narrow { max-width: 100px; }
+.tb-select option { background: var(--glass-strong); color: var(--text); }
+.tb-check { display: flex; align-items: center; gap: 4px; font-size: 12px; color: var(--muted); cursor: pointer; }
+.tb-group.els { flex-wrap: wrap; gap: 3px; }
+.tb-el { display: inline-flex; align-items: center; gap: 5px; height: 28px; padding: 0 8px; border-radius: 8px; border: 1px solid var(--glass-border); background: var(--field); font-size: 12px; font-weight: 700; }
+.tb-el kbd { font-size: 9.5px; padding: 0 4px; display: none; }
+body.ctrl-held .tb-el kbd { display: inline; }
+.tb-el:hover { border-color: rgba(var(--accent-rgb), .5); }
+.tb-el.on { background: var(--accent); color: var(--on-accent); border-color: transparent; }
+.tb-el.on kbd { color: var(--on-accent); border-color: rgba(0, 0, 0, .2); background: rgba(255, 255, 255, .2); }
+@media (max-width: 760px) { .tb-el span { max-width: 62px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .tb-el kbd { display: none; } }
+
+/* ================================================================ page */
+#ed-wrap { flex: 1; overflow-y: auto; padding: 28px 16px 40vh; scroll-behavior: auto; }
+.page { --ed-font: "Literata", Georgia, serif; --ed-size: 19px; --ed-lh: 1.7; --ed-width: 720px;
+  width: min(var(--ed-width), 100%); margin: 0 auto; color: var(--page-fg); border-radius: 6px; transition: background .3s; }
+.page.paper { background: var(--page-bg); box-shadow: var(--page-shadow); padding: 64px clamp(20px, 7%, 80px) 90px; }
+.page:not(.paper) { padding: 20px 4px; }
+#ed { outline: none; min-height: 60vh; font-family: var(--ed-font); font-size: var(--ed-size); line-height: var(--ed-lh); caret-color: var(--accent); word-wrap: break-word; hyphens: manual;
+  white-space: pre-wrap; /* sinon Chrome remplace les espaces insécables de la typographie française */ }
+#ed.empty > :first-child::before { content: var(--ph); position: absolute; color: var(--muted); pointer-events: none; font-style: italic; opacity: .7; }
+#ed.empty > :first-child { position: relative; }
+#ed p { margin: 0 0 .25em; }
+#ed a { color: var(--accent); }
+#ed h1 { font-family: var(--serif); font-weight: 600; font-size: 1.75em; line-height: 1.2; text-align: center; margin: 1em 0 1.1em; }
+#ed h2 { font-family: var(--serif); font-weight: 600; font-size: 1.3em; line-height: 1.3; margin: 1.3em 0 .6em; }
+#ed h3 { font-size: 1.05em; font-weight: 700; letter-spacing: .02em; margin: 1.2em 0 .5em; }
+#ed blockquote { margin: .8em 2em; font-style: italic; opacity: .92; }
+#ed hr { border: 0; text-align: center; margin: 1.2em 0; height: 1.6em; }
+#ed hr::after { content: "⁂"; color: var(--muted); font-size: 1.1em; }
+#ed ul, #ed ol { margin: .4em 0 .6em; padding-left: 1.6em; }
+#ed .n-center { text-align: center; text-indent: 0 !important; }
+#ed .n-letter { margin: .5em 2em; font-style: italic; text-indent: 0 !important; }
+#ed .n-noindent { text-indent: 0 !important; }
+.page.indent[data-mode="roman"] #ed p { text-indent: 1.6em; margin-bottom: 0; }
+.page.indent[data-mode="roman"] #ed :is(h1, h2, h3, hr, blockquote) + p { text-indent: 0; }
+.page.justify[data-mode="roman"] #ed p { text-align: justify; }
+#ed .anno { background: rgba(255, 210, 90, .22); border-bottom: 2px dotted rgba(230, 170, 40, .9); cursor: help; border-radius: 2px; }
+#ed .flash { animation: flash 1.2s; }
+@keyframes flash { 0%, 40% { background: rgba(var(--accent-rgb), .3); } }
+
+/* concentration : estomper les autres paragraphes */
+.page.focus-mode #ed > * { transition: opacity .25s; opacity: .28; }
+.page.focus-mode #ed > .is-current { opacity: 1; }
+.page.focus-mode #ed:not(:focus-within) > * { opacity: 1; }
+#ed-wrap.typewriter { padding-top: 45vh; }
+
+/* ================================================================ scénario (format standard, Courier 12 pt) */
+.page[data-mode="scenario"] { --sc: 1ch; }
+.page[data-mode="scenario"] #ed { font-family: var(--mono); font-size: calc(var(--ed-size) * .86); line-height: 1.25; max-width: 61ch; margin: 0 auto; counter-reset: scene; }
+.page[data-mode="scenario"] #ed p { margin: 0; text-indent: 0; min-height: 1.25em; position: relative; }
+#ed .sc-scene { text-transform: uppercase; font-weight: 700; margin-top: 1.8em !important; margin-bottom: 1em !important; }
+#ed > .sc-scene:first-child { margin-top: 0 !important; }
+.page.numbered #ed .sc-scene { counter-increment: scene; }
+.page.numbered #ed .sc-scene::before { content: counter(scene); position: absolute; left: -5ch; color: var(--muted); font-weight: 400; }
+.page.numbered #ed .sc-scene::after { content: counter(scene); position: absolute; right: -5ch; top: 0; color: var(--muted); font-weight: 400; }
+#ed .sc-action { margin-bottom: 1em !important; }
+#ed .sc-char { text-transform: uppercase; margin: 1em 0 0 22ch !important; }
+#ed .sc-paren { margin-left: 16ch !important; max-width: 25ch; }
+#ed .sc-paren::before { content: "("; } #ed .sc-paren::after { content: ")"; }
+#ed .sc-dial { margin-left: 10ch !important; max-width: 36ch; margin-bottom: 1em !important; }
+#ed .sc-trans { text-transform: uppercase; text-align: right; margin: 1em 0 !important; }
+#ed .sc-shot { text-transform: uppercase; margin: 1em 0 !important; }
+#ed .sc-center { text-transform: uppercase; text-align: center; margin: 1em 0 !important; }
+#ed .sc-note { font-family: var(--font); font-size: .85em; background: rgba(120, 200, 140, .14); border-left: 3px solid rgba(120, 200, 140, .7); padding: 4px 8px; border-radius: 4px; margin: .6em 0 !important; color: var(--muted); }
+#ed .sc-dial + .sc-paren, #ed .sc-paren + .sc-dial { margin-top: 0 !important; }
+#ed .sc-dial:has(+ .sc-paren) { margin-bottom: 0 !important; }
+@media (max-width: 700px) {
+  #ed .sc-char { margin-left: 30% !important; } #ed .sc-dial { margin-left: 14% !important; } #ed .sc-paren { margin-left: 22% !important; }
+  .page.numbered #ed .sc-scene::before, .page.numbered #ed .sc-scene::after { display: none; }
+}
+
+/* ================================================================ théâtre */
+.page[data-mode="theatre"] #ed p { margin: 0; text-indent: 0; min-height: 1em; }
+#ed .th-acte { font-family: var(--serif); text-align: center; text-transform: uppercase; letter-spacing: .14em; font-size: 1.35em; font-weight: 600; margin: 1.8em 0 .9em !important; }
+#ed > .th-acte:first-child { margin-top: .2em !important; }
+#ed .th-scene { text-align: center; text-transform: uppercase; letter-spacing: .1em; font-weight: 700; font-size: .95em; margin: 1.6em 0 .2em !important; }
+#ed .th-cast { text-align: center; font-variant: small-caps; letter-spacing: .04em; color: var(--muted); margin-bottom: 1em !important; }
+#ed .th-dida { font-style: italic; margin: .45em 0 .45em 2.5em !important; opacity: .85; }
+#ed .th-char { text-align: center; font-variant: small-caps; letter-spacing: .08em; font-weight: 700; margin-top: .9em !important; }
+#ed .th-rep { margin-bottom: .2em !important; }
+#ed .th-vers { margin-left: 3em !important; font-style: italic; }
+#ed .th-note { font-family: var(--font); font-size: .85em; background: rgba(120, 200, 140, .14); border-left: 3px solid rgba(120, 200, 140, .7); padding: 4px 8px; border-radius: 4px; margin: .6em 0 !important; color: var(--muted); }
+#ed .th-char + .th-dida { margin-top: 0 !important; text-align: center; margin-left: 0 !important; }
+
+/* ================================================================ autocomplétion */
+.ac-pop { position: fixed; z-index: 90; min-width: 220px; max-width: 380px; padding: 4px; border-radius: 10px; background: var(--glass-strong); border: 1px solid var(--glass-border); box-shadow: 0 12px 30px rgba(0, 0, 0, .35); font-family: var(--mono); font-size: 13.5px; }
+.ac-item { padding: 5px 9px; border-radius: 7px; cursor: pointer; text-transform: uppercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ac-item.on { background: var(--accent); color: var(--on-accent); }
+.ac-hint { font-family: var(--font); font-size: 10.5px; color: var(--muted); padding: 4px 8px 2px; }
