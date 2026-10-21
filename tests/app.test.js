@@ -110,8 +110,8 @@ const server = http.createServer((req, res) => {
     await page.click('.g-node.sel .g-add');
     const pb = await page.locator('.g-node.sel .g-port').boundingBox();
     const tb = await page.locator('.g-node.start .g-head').boundingBox();
-    await page.mouse.move(pb.x + 5, pb.y + 5); await page.mouse.down();
-    await page.mouse.move(tb.x + 40, tb.y + 10, { steps: 6 }); await page.mouse.up();
+    await page.mouse.move(pb.x + pb.width / 2, pb.y + pb.height / 2); await page.mouse.down();
+    await page.mouse.move(tb.x + tb.width / 2, tb.y + tb.height / 2, { steps: 6 }); await page.mouse.up();
     assert.ok(await page.evaluate(() => SE.graph.node(SE.graph.sel).choices[0].target === SE.graph.g.start));
     await page.click('text=▶ Tester');
     await page.click('.play-choice >> nth=0');
